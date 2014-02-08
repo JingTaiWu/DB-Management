@@ -1,5 +1,6 @@
 ﻿--Jinig Tai Wu
 --Lab 4
+--2/8/2014
 
 
 --Get the Cities of agents booking an order for customer Basics
@@ -55,7 +56,7 @@ where cid in (select cid
 			    where city = 'Dallas' OR city = 'Duluth'));
 
 --Find all customers who have the same discount as that of any customers in Dallas
---or Kyoto
+--or Kyoto.
 select *
 from customers
 where discount in (select discount
