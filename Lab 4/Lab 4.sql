@@ -30,12 +30,12 @@ where cid in (select cid
 --Get the cids and names of customers who ordered both product p01 and p07
 select cid, name
 from customers
-where cid in (select cid
+where cid in (select distinct cid
               from orders
-              where pid = 'p01'
-		intersect select cid
+              where pid = 'p01' --cid with order p01 (c001, c006, c004)
+		INTERSECT select distinct cid
 			  from orders
-			  where pid = 'p07');
+			  where pid = 'p07'); --cid with oder p07(c006, c001)
 
 --Get the pids of products ordered by any customers who ever placed an order
 --through agent a03
