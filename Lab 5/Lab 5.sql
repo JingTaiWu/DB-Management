@@ -47,12 +47,12 @@ where customers.city = agents.city;
 
 --Question 7: get the name and city of customers who live in the city where the least number of
 --products are made
-select customers.name, customers.city, products.name, products.city
+select distinct customers.name, customers.city
 from customers, products
 where customers.city = (select city --take the top city (the city that has the least occurance)
 			from (select city, COUNT(city) as "CityCounts" --creates a table that calculates the occurance of the city in ascending order
 			      from products
 			      group by city
-			      order by "CityCounts" ASC));
---this doesnt work yet
+			      order by "CityCounts" ASC) as "City occurance"
+			limit 1);
 				
