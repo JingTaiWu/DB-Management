@@ -16,9 +16,11 @@ where aid in (select aid
 --for a customer in Kyoto.
 select distinct pid
 from Orders
-where cid in (select cid
-	      from customers
-	      where city = 'Kyoto');
+where aid in (select aid
+	      from orders
+	      where cid in (select cid
+			    from customers
+			    where city = 'Kyoto'));
 
 --Find the cids and names of customers who never placed an order through agent a03
 select cid, name
