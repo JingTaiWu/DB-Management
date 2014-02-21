@@ -11,7 +11,7 @@ and   customers.name = 'Basics';
 
 --Question 2: get the pids of products ordered through any agent who makes at least one order for a customer
 --in kyoto
-select distinct products.pid
+select distinct orders.pid
 from products, orders, customers, agents
 where products.pid = orders.pid
 and   agents.aid = orders.aid
@@ -47,12 +47,23 @@ where customers.city = agents.city;
 
 --Question 7: get the name and city of customers who live in the city where the least number of
 --products are made
-select distinct customers.name, customers.city
-from customers, products
-where customers.city = (select city --take the top city (the city that has the least occurance)
-			from (select city, COUNT(city) as "CityCounts" --creates a table that calculates the occurance of the city in ascending order
+
+--query based on the different types of products produced in a city
+--unfortunately not what Alan wants
+--select distinct customers.name, customers.city
+--from customers, products
+--where customers.city = (select city --take the top city (the city that has the least occurance)
+			--from (select city, COUNT(city) as "CityCounts" --creates a table that calculates the occurance of the city in ascending order
+			      --from products
+			      --group by city
+			      --order by "CityCounts" ASC) as "City occurance"
+			--limit 1);
+				
+select customers.name, customers.city
+from customers
+where customers.city = (select city
+			from (select city, sum(quantity) as orderedQuantity
 			      from products
 			      group by city
-			      order by "CityCounts" ASC) as "City occurance"
-			limit 1);
-				
+			      order by orderedQuantity asc
+			      limit 1) as leastCity);
